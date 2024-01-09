@@ -1,0 +1,74 @@
+.loginbox{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.loginimg{
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+.loginimg img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.auth_heading{
+    color: #03014C;
+    font-size: 33px;
+    text-transform: capitalize;
+    font-weight: 700;
+    font-family: 'Open Sans', sans-serif;
+}
+.provider_login{
+    border: 1px solid #03014C;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+    padding: 20px 30px;
+    display: inline-flex;
+    align-items: center;
+    column-gap: 10px;
+    margin-top: 30px;
+}
+.provider_login span a{
+    font-size: 14px;
+    color: #03014C;
+    font-weight: 600;
+    font-family: 'Open Sans', sans-serif;
+}
+.loginbox .form_main{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 60px;
+}
+.form_main input{
+    width: 300px;
+}
+.loginbtn{
+    margin-top: 60px;
+    width: 100%;
+}
+.notaccount{
+    display: flex;
+    align-items: center;
+    margin-top: 40px;
+    column-gap: 3px;
+}
+.notaccount h5{
+color: #03014C;
+font-family: 'Open Sans', sans-serif;
+font-size: 13.px;
+font-weight: 400;
+}
+.notaccount a{
+color: #EA6C00;
+font-family: 'Open Sans', sans-serif;
+font-size: 13px;
+font-weight: 700;
+}
