@@ -2,73 +2,99 @@
     width: 100%;
     height: 100vh;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 }
 .loginimg{
     width: 100%;
     height: 100vh;
+    background: green;
     overflow: hidden;
+}
+.auth_heading{
+    color: #03014C;
+    font-size: 33px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+.provider_login{
+    padding: 22px 42px 22px 29px;
+    border-radius: 8.336px;
+    border: 0.834px solid #03014C;
+    display: inline-flex;
+    align-items: center;
+    column-gap: 10px;
+    margin: 30px 0;
+}
+.provider_login a{
+    font-size: 14px;
+    color: #03014C;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+}
+.from_main{
+    display: flex;
+    flex-direction: column;
+    row-gap: 45px;
+    position: relative;
+}
+.login_input_field{
+    width: 100%;
+}
+.hide_show_login{
+    position: absolute;
+    font-size: 18px;
+    top: 117px;
+    right: 0;
+}
+.loginbtn{
+    background: #5F34F5 !important;
+    padding: 15px 0 !important;
+    box-shadow: none !important;
+    font-size: 18px !important;
+    font-family: 'Open Sans', sans-serif !important;
+    font-weight: 600 !important;
+    border-radius: 8px !important;
+    text-transform: capitalize !important;
+}
+.loginauth{
+    color: #03014C;
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    padding-top: 30px;
+
+}
+.loginauth a, .loginauth span{
+    color: #EA6C00;
+    font-family: Open Sans;
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    text-transform: capitalize;
+    padding-left: 5px;
+    cursor: pointer;
 }
 .loginimg img{
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-.auth_heading{
-    color: #03014C;
-    font-size: 33px;
-    text-transform: capitalize;
-    font-weight: 700;
-    font-family: 'Open Sans', sans-serif;
-}
-.provider_login{
-    border: 1px solid #03014C;
-    border-radius: 8px;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    -ms-border-radius: 8px;
-    -o-border-radius: 8px;
-    padding: 20px 30px;
-    display: inline-flex;
-    align-items: center;
-    column-gap: 10px;
-    margin-top: 30px;
-}
-.provider_login span a{
-    font-size: 14px;
-    color: #03014C;
-    font-weight: 600;
-    font-family: 'Open Sans', sans-serif;
-}
-.loginbox .form_main{
-    margin-top: 30px;
+.forgot_box{
     display: flex;
     flex-direction: column;
-    row-gap: 60px;
+    row-gap: 30px;
 }
-.form_main input{
-    width: 300px;
+.forgot_box h2{
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    text-transform: capitalize;
 }
-.loginbtn{
-    margin-top: 60px;
-    width: 100%;
-}
-.notaccount{
-    display: flex;
-    align-items: center;
-    margin-top: 40px;
-    column-gap: 3px;
-}
-.notaccount h5{
-color: #03014C;
-font-family: 'Open Sans', sans-serif;
-font-size: 13.px;
-font-weight: 400;
-}
-.notaccount a{
-color: #EA6C00;
-font-family: 'Open Sans', sans-serif;
-font-size: 13px;
-font-weight: 700;
+.closeicon{
+    position: absolute;
+    font-size: 25px;
+    right: 8px;
+    top: 11px;
+    cursor: pointer;
 }

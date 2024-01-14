@@ -1,0 +1,34 @@
+.regigtapera{
+    padding: 20px 0 38px 0;
+    color: #000;
+    font-size: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 400;
+    opacity: 0.5;
+}
+.registration_input_field{
+    width: 368px;
+}
+.registrationbtn{
+    width: 368px;
+    padding: 15px 0 !important;
+    border-radius: 86px !important;
+    margin-top: 25px !important;
+    color: #FFF !important;
+    font-family: 'Nunito', sans-serif !important;
+    font-size: 20px !important;
+    font-weight: 600 !important;
+
+}
+.from_mainn{
+    display: flex;
+    flex-direction: column;
+    row-gap: 35px;
+    position: relative;
+}
+.hide_show_registration{
+    position: absolute;
+    font-size: 18px;
+    right: 164px;
+    top: 202px;
+}
