@@ -24,11 +24,18 @@
     display: flex;
     flex-direction: column;
     row-gap: 35px;
+    
+}
+.regis_pass_shoeicon{
     position: relative;
 }
-.hide_show_registration{
+.hide_show_registration svg{
     position: absolute;
     font-size: 18px;
-    right: 164px;
-    top: 202px;
+    right: 170px;
+    top: 20px;
+}
+.from_mainn .regierroe{
+width: 370px;
+margin-top: 5px;
 }
