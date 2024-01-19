@@ -37,7 +37,6 @@
     display: flex;
     flex-direction: column;
     row-gap: 45px;
-    position: relative;
 }
 .login_input_field{
     width: 100%;
@@ -45,8 +44,8 @@
 .hide_show_login{
     position: absolute;
     font-size: 18px;
-    top: 117px;
-    right: 0;
+    top: 22px;
+    right: 8px;
 }
 .loginbtn{
     background: #5F34F5 !important;
@@ -98,3 +97,8 @@
     top: 11px;
     cursor: pointer;
 }
+.login_pass_shoeicon{
+    position: relative;
+}
+
+
