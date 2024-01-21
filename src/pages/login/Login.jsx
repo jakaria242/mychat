@@ -48,15 +48,12 @@ const Login = () => {
   }
 
   let handleSend = () => {
-    if(!forgetData){
+    if (!forgetData){
       setForgetError("Enter your email");
-    }else {
-      if (!forgetData.match(emailregex)){
-        setForgetError("Invalid email address");
-      }else{
-        setForgetError("")
-        setForgetData("")
-      }
+    }else if(!forgetData.match(emailregex)){
+      setForgetError("Invalid email address");
+    }else{
+      setForgetError("")
     }
     console.log(forgetData);
   }

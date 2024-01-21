@@ -1,0 +1,17 @@
+.home_wrapper{
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+.user_Accept button{
+    padding: 8px 12px;
+    color: #fff;
+    background: #5F35F5;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    text-transform: capitalize;
+}

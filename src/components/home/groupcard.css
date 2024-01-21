@@ -1,0 +1,111 @@
+.groupcard{
+    width: 500px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 25px 0;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.group_heading{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 22px;
+}
+.group_heading h4{
+    color: #000;
+    font-size: 22px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+.three_dots{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #ece7e7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.user_box{
+    margin-top: 17px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    height: 380px;
+    overflow-y: scroll;
+    padding: 0 22px;
+}
+.user_box::-webkit-scrollbar {
+    width: 0px;
+  }
+.user_item{
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    column-gap: 14px;
+}
+.user_item:last-child{
+    border-bottom: 0;
+}
+
+.user_img_box{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.user_img{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.user_img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.user_info{
+    width: 100%;
+    flex-basis: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.user_detils h5{
+    color: #000;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+.user_detils p{
+    color: rgba(77, 77, 77, 0.75);
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 8px;
+}
+.user_fd svg{
+    font-size: 35px;
+    color: #5F35F5;
+    cursor: pointer;
+}
+/* .home_wrapper{
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+.user_Accept button{
+    padding: 8px 12px;
+    color: #fff;
+    background: #5F35F5;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    text-transform: capitalize;
+}  */

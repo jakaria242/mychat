@@ -12,7 +12,9 @@ const RootLayout = () => {
         <Sidebar/>
         </Grid>
         <Grid item xs={10}>
+            <div className="outlatebox">
             <Outlet/>
+            </div>
       </Grid>
     </Grid>
 </Box>
