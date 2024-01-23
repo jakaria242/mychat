@@ -15,6 +15,7 @@ import { FaRegEye, FaRegEyeSlash,} from "react-icons/fa6";
 import { IoCloseSharp } from "react-icons/io5";
 import Modal from '@mui/material/Modal';
 import { Alert } from '@mui/material';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 
 const style = {
@@ -30,6 +31,9 @@ const style = {
 };
 
 const Login = () => {
+
+  const auth = getAuth();
+
   const [hideShoew, setHideShoew] = useState(false);
   
   const [open, setOpen] = React.useState(false);
@@ -40,24 +44,37 @@ const Login = () => {
     setOpen(false)
   }
   
-  let [forgetError, setForgetError] = useState()
+//  forgot validation
 
-  let [forgetData, setForgetData] = useState()
+  let [forgetError, setForgetError] = useState({
+    forgetemail:"",
+  })
+
+  let [forgetData, setForgetData] = useState({
+    forgetemail:"",
+  })
   let handleForget = (e) => {
-    setForgetData(e.target.value)
+    let {name,value} = e.target
+    setForgetData({
+      ...forgetData, [name]:value
+    })
   }
 
   let handleSend = () => {
-    if (!forgetData){
-      setForgetError("Enter your email");
-    }else if(!forgetData.match(emailregex)){
-      setForgetError("Invalid email address");
+    if (!forgetData.forgetemail){
+      setForgetError({forgetemail : "Enter your email"});
+    }else if(!forgetData.forgetemail.match(emailregex)){
+      setForgetError({forgetemail: "Invalid email address"});
     }else{
-      setForgetError("")
+      setForgetError({
+        forgetemail: "",
+      })
     }
     console.log(forgetData);
   }
+ //  forgot validation
 
+   // login validation start
   let [loginError, setLoginError] = useState({
     email : "",
     password: "",
@@ -68,7 +85,7 @@ const Login = () => {
     password: "",
   })
 
-
+ 
    let handleForm = (e)=> {
     let {name,value} = e.target
     setSignInData({
@@ -94,9 +111,24 @@ const Login = () => {
         email : "",
         password: "",
       })
+      signInWithEmailAndPassword(auth, signInData.email, signInData.password).then((userCredential)=>{
+        console.log(userCredential);
+      }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        if (errorCode == "auth/invalid-credential"){
+          setLoginError({email: "Invalid email or password address"});
+        }else{
+          setLoginError({email: ""});
+        }
+        console.log(errorMessage);
+      });
       console.log(signInData);
     }
   }
+
+   // login validation End
+
   return (
 <>
   <Box>
@@ -156,9 +188,9 @@ const Login = () => {
           </div>
             <div className="forgot_box">
               <h2>Forgotten password?</h2>
-                  <Input onChange={handleForget}  type='email' name='email' label='Email Addres' placeholder='Enter your email' variant='standard'/>
+                  <Input onChange={handleForget}  type='email' name='forgetemail' label='Email Addres' placeholder='Enter your email' variant='standard'/>
                   {
-                    forgetError && <Alert className='regierroe' severity="error">{forgetError}</Alert> 
+                    forgetError.forgetemail && <Alert className='regierroe' severity="error">{forgetError.forgetemail}</Alert> 
                   }
               <CustomButton onClick={handleSend} variant="contained" text='Send link'/>
 

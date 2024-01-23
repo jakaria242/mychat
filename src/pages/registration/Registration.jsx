@@ -10,8 +10,21 @@ import '../registration/registration.css'
 import regitrationImg from '../../assets/images/registrationImg.jpg'
 import { FaRegEye, FaRegEyeSlash  } from "react-icons/fa6";
 import { Alert } from '@mui/material';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { Circles } from 'react-loader-spinner'
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Registration = () => {
+
+  const navigate = useNavigate();
+
+  const [loader, setLoader] = useState(false)
+
+  const auth = getAuth();
+
   let [hideShoew, setHideShoew] = useState(false);
   let handleToggoleHideShoe = () => {
     setHideShoew(!hideShoew)
@@ -63,11 +76,33 @@ const Registration = () => {
         email : "",
         password : ""
       })
-      console.log(signUpData);
+      
+      setLoader(true)
+      createUserWithEmailAndPassword(auth, signUpData.email, signUpData.password).then((userCredential)=>{
+       console.log(userCredential);
+       navigate("/");
+       setSignUpData({
+        fullname : "",
+        email : "",
+        password : ""
+       })
+      }).catch((error) => {
+        const errorCode = error.code;
+        // const errorMessage = error.message;
+        if (errorCode == "auth/email-already-in-use") {
+          setRegisError({email:"Email already Use"});
+        }else{
+          setRegisError({email:""});
+        }
+      });
+      setLoader(false)
+      // console.log(signUpData);
     }
   }
 
   return (
+    <>
+
     <Box>
     <Grid container spacing={0}>
       <Grid item xs={6}>
@@ -77,21 +112,21 @@ const Registration = () => {
             <p className='regigtapera'>Free register and you can enjoy it</p>
             <div className='from_mainn'>
             <div>
-                <Input onChange={handleForm} style='registration_input_field' type='text' name='fullname' label='Full name' variant='outlined'/>
+                <Input onChange={handleForm} style='registration_input_field' value={signUpData.fullname} type='text' name='fullname' label='Full name' variant='outlined'/>
                   {
                     regisError.fullname &&
                      <Alert className='regierroe' severity="error">{regisError.fullname}</Alert>    
                   }
               </div>
               <div>
-                <Input onChange={handleForm} style='registration_input_field' type='email' name='email' label='Email Address'  variant='outlined'/>
+                <Input onChange={handleForm} style='registration_input_field'  value={signUpData.email} type='email' name='email' label='Email Address'  variant='outlined'/>
                 {
                     regisError.email &&
                      <Alert className='regierroe' severity="error">{regisError.email}</Alert>
                   }
               </div>
               <div className='regis_pass_shoeicon'>
-                <Input onChange={handleForm} style='registration_input_field'type={hideShoew ? 'text' : 'password'} name='password' label='Password' variant='outlined'/>
+                <Input onChange={handleForm} style='registration_input_field'  value={signUpData.password} type={hideShoew ? 'text' : 'password'} name='password' label='Password' variant='outlined'/>
                 <div className="hide_show_registration"  onClick={handleToggoleHideShoe}>
                 {hideShoew ? <FaRegEye /> : <FaRegEyeSlash />}
                   </div>
@@ -100,7 +135,19 @@ const Registration = () => {
                      <Alert className='regierroe' severity="error">{regisError.password}</Alert>
                   }
               </div>
-                <CustomButton onClick={handleSubmit} styling='registrationbtn' variant="contained" text='Sign up'/>
+              {
+                loader ? <Circles
+                height="80"
+                width="80"
+                color="#4fa94d"
+                ariaLabel="circles-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+                />
+                 :
+                 <CustomButton onClick={handleSubmit} styling='registrationbtn' variant="contained" text='Sign up'/>
+              }
             </div>
             <AuthNavigate style='loginauth' text='Already  have an account ?'  linktext='Sign In' link='/'/>
             </div>
@@ -113,6 +160,7 @@ const Registration = () => {
       </Grid>
     </Grid>
 </Box>
+    </>
   )
 }
 
