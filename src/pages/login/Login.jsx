@@ -15,8 +15,10 @@ import { FaRegEye, FaRegEyeSlash,} from "react-icons/fa6";
 import { IoCloseSharp } from "react-icons/io5";
 import Modal from '@mui/material/Modal';
 import { Alert } from '@mui/material';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-
+import { getAuth, signInWithEmailAndPassword,signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const style = {
   position: 'absolute',
@@ -31,6 +33,8 @@ const style = {
 };
 
 const Login = () => {
+
+  const navigate = useNavigate();
 
   const auth = getAuth();
 
@@ -105,14 +109,30 @@ const Login = () => {
     }else if(!signInData.password){
       setLoginError({password: "Enter your password"});
     }else if(!signInData.password.match(passwordregex)){
-      setLoginError({password:"Use strong password"});
+      setLoginError({email: "Invalid email or password address"});
     }else{
       setLoginError({
         email : "",
         password: "",
       })
+      
       signInWithEmailAndPassword(auth, signInData.email, signInData.password).then((userCredential)=>{
-        console.log(userCredential);
+        if (userCredential.user.emailVerified) {
+          navigate("\home")
+        }else{
+          signOut(auth).then(()=>{
+            toast.error('Pleace verify your email', {
+              position: "top-left",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              });
+          })
+        }
       }).catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -123,7 +143,7 @@ const Login = () => {
         }
         console.log(errorMessage);
       });
-      console.log(signInData);
+      // console.log(signInData);
     }
   }
 
@@ -131,6 +151,18 @@ const Login = () => {
 
   return (
 <>
+<ToastContainer
+position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="dark"
+/>
   <Box>
       <Grid container spacing={0}>
         <Grid item xs={6}>

@@ -10,14 +10,14 @@ import '../registration/registration.css'
 import regitrationImg from '../../assets/images/registrationImg.jpg'
 import { FaRegEye, FaRegEyeSlash  } from "react-icons/fa6";
 import { Alert } from '@mui/material';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, updateProfile  } from "firebase/auth";
 import { Circles } from 'react-loader-spinner'
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+import { getDatabase, ref, set } from "firebase/database";
 
 const Registration = () => {
+
+  const db = getDatabase();
 
   const navigate = useNavigate();
 
@@ -79,8 +79,22 @@ const Registration = () => {
       
       setLoader(true)
       createUserWithEmailAndPassword(auth, signUpData.email, signUpData.password).then((userCredential)=>{
-       console.log(userCredential);
-       navigate("/");
+       sendEmailVerification(auth.currentUser).then(()=>{
+        
+        updateProfile(auth.currentUser,{
+          displayName: signUpData.fullname,
+          photoURL: "https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTAxL3JtNjA5LXNvbGlkaWNvbi13LTAwMi1wLnBuZw.png"
+        }).then(()=>{
+          set(ref(db, 'users/' + userCredential.user.uid), {
+            username:  userCredential.user.displayName,
+            email:  userCredential.user.email,
+            profile_picture :  userCredential.user.photoURL
+          }).then(()=>{
+            navigate("/");
+            console.log(userCredential)
+          })
+        })
+      })
        setSignUpData({
         fullname : "",
         email : "",

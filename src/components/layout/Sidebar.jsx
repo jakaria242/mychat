@@ -8,21 +8,59 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 import { IoSettingsOutline } from "react-icons/io5";
 import Image from '../../utilities/Image';
 import UserPic from '../../assets/images/userpic.jpg';
-
-
+import { getAuth, signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
 
 const Sidebar = () => {
+
+  const navigate = useNavigate();
+
+  const auth = getAuth();
+
+  let handleLogOut = () =>{
+    signOut(auth).then(()=>{
+      toast.success('Logout Done!', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      })
+      setTimeout(()=>{
+       navigate("/")
+      },2000)
+    })
+  }
+  const userinfo = auth.currentUser;
+
   return (
     <>
+    <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="dark"
+      />
     <div className='sidebarBox'>
       <div>
         <div className='sidebar_imgbox'>
-          <Image src={UserPic} alt="Not Found"/>
+          <Image src={userinfo && userinfo.photoURL} alt="Not Found"/>
         </div>
-        <h3 className='username'>Jakaria</h3>
+        <h3 className='username'>{userinfo && userinfo.displayName}</h3>
       </div>
         <div className='sidebar_manu'>
           <ul>
@@ -40,7 +78,7 @@ const Sidebar = () => {
             </li>
           </ul>
         </div>
-        <div className='logout'>
+        <div onClick={handleLogOut} className='logout'>
         <NavLink to="#"><GrLogout /></NavLink>
         </div>
     </div>
