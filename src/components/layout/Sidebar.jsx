@@ -36,8 +36,8 @@ const Sidebar = () => {
   const auth = getAuth();
 
 
-  let location = (window.location.host);
-  console.log(location);
+  // let location = (window.location.host);
+  // console.log(location);
 
   useEffect(()=>{
     if(!data){
@@ -47,11 +47,11 @@ const Sidebar = () => {
     }
   },[])
 
-  useEffect(()=>{
-    if(data == location){
-      navigate("/home")
-    }
-  },[])
+  // useEffect(()=>{
+  //   if(data == location){
+  //     navigate("/home")
+  //   }
+  // },[])
 
 
   // Logout --==================================================
