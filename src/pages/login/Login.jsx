@@ -19,6 +19,8 @@ import { getAuth, signInWithEmailAndPassword,signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useSelector, useDispatch } from 'react-redux'
+import { loginuser } from '../../slices/userSlice';
 
 const style = {
   position: 'absolute',
@@ -33,6 +35,8 @@ const style = {
 };
 
 const Login = () => {
+
+  const dispatch = useDispatch()
 
   const navigate = useNavigate();
 
@@ -118,6 +122,8 @@ const Login = () => {
       
       signInWithEmailAndPassword(auth, signInData.email, signInData.password).then((userCredential)=>{
         if (userCredential.user.emailVerified) {
+          localStorage.setItem("user", JSON.stringify(userCredential.user))
+          dispatch(loginuser(userCredential.user))
           navigate("\home")
         }else{
           signOut(auth).then(()=>{
