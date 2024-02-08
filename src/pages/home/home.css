@@ -3,6 +3,10 @@
     gap: 30px;
     flex-wrap: wrap;
 }
+.user_Accept{
+    display: flex;
+    gap: 5px;
+}
 .user_Accept button{
     padding: 8px 12px;
     color: #fff;

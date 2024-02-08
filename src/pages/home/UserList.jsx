@@ -19,8 +19,8 @@ const UserList = () => {
   const db = getDatabase();
 
   useEffect(()=>{
-    const userstRef = ref(db, 'users');
-    onValue(userstRef, (snapshot) => {
+    const usersRef = ref(db, 'users');
+    onValue(usersRef, (snapshot) => {
       let arr = []
       snapshot.forEach((item)=>{
         if(data.uid != item.key){
