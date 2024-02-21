@@ -17,8 +17,46 @@
     overflow: hidden;
     display: flex;
     justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+.sidebar_imgbox .image_overlay{
+    position: absolute;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.493);
+    transition: all linear 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.image_overlay svg{
+    color: #fff;
+    font-size: 50px;
+}
+.sidebar_imgbox:hover .image_overlay{
+    bottom: 0;
 }
 .sidebar_imgbox img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.upload_modal{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.img_holder{
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+.img_holder img {
     width: 100%;
     height: 100%;
     object-fit: cover;

@@ -30,13 +30,35 @@ const FriendRequest = () => {
   });
   },[])
 
+// fb request cencle===============
+let handleCancleFrequest= (cancleinfo)=> {
+  // console.log(cancleinfo);
+  remove(ref(db, 'friendrequest/' + cancleinfo.id)).then(()=>{
+    toast("Request Cancle...")
+  })
+}
+// fb request cencle===============
 
-  let handleCancleFrequest= (cancleinfo)=> {
-    console.log(cancleinfo);
-    remove(ref(db, 'friendrequest/' + cancleinfo.id)).then(()=>{
-      toast("Request Cancle...")
-    })
-  }
+
+// fb request Accept===============
+let handleAcceptFrequest = (acceptinfo) =>{
+  // console.log(acceptinfo);
+  set(push(ref(db, 'friends')), {
+    whosendname : acceptinfo.sendername,
+    whosendid : acceptinfo.senderuid,
+    whosendemail : acceptinfo.sendermail,
+    whosendphoto : acceptinfo.senderimg,
+    whoreceivename : data.displayName,
+    whoreceiveid : data.uid,
+    whoreceiveemail : data.email,
+    whoreceivephoto : data.photoURL,
+  }).then(()=>{
+    remove(ref(db, 'friendrequest/' + acceptinfo.id))
+    toast(" Request Accepted Successfull ...")
+  })
+}
+// fb request Accept===============
+
 
 
   return (
@@ -56,7 +78,7 @@ const FriendRequest = () => {
                         <p>MERN Developer</p>
                       </div>
                       <div className='user_Accept'>
-                          <button>Accept</button>
+                          <button onClick={()=>handleAcceptFrequest(item)}>Accept</button>
                           <button onClick={()=>handleCancleFrequest(item)}>cancle</button>
                       </div>
                     </div>

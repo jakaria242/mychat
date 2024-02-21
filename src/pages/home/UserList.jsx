@@ -33,7 +33,7 @@ const UserList = () => {
 
 
   let handleFrequest = (frequestinfo)=>{
-    console.log(frequestinfo);
+    // console.log(frequestinfo);
     set(push(ref(db, 'friendrequest')), {
       senderuid : data.uid,
       sendername : data.displayName,

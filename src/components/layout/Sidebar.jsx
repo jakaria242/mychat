@@ -14,11 +14,31 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useSelector, useDispatch } from 'react-redux'
 import { loginuser } from '../../slices/userSlice';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import { MdCloudUpload } from "react-icons/md";
 
-
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 
 const Sidebar = () => {
+
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const data = useSelector((state) =>state.loginuserdata.value)
 
@@ -83,6 +103,22 @@ const Sidebar = () => {
 
   return (
     <>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+       <div className='upload_modal'>
+       <h2>Upload Profile Photo</h2>
+       <div className='img_holder'>
+       <Image src={data && data.photoURL} alt="Not Found"/>
+       </div>
+         <input type='file'/>
+       </div>
+        </Box>
+      </Modal>
     <ToastContainer
       position="top-right"
       autoClose={5000}
@@ -99,6 +135,7 @@ const Sidebar = () => {
       <div>
         <div className='sidebar_imgbox'>
           <Image src={data && data.photoURL} alt="Not Found"/>
+          <div className="image_overlay" onClick={handleOpen}><MdCloudUpload /></div>
         </div>
         <h3 className='username'>{data && data.displayName}</h3>
 
