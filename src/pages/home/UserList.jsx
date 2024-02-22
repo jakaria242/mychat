@@ -3,19 +3,22 @@ import GroupCard from '../../components/home/GroupCard'
 import Ellipse from '../../assets/images/Ellipse 2.png'
 import Image from '../../utilities/Image'
 import { FaPlusSquare } from "react-icons/fa";
-import { getDatabase, ref, onValue , set, push } from "firebase/database";
+import { getDatabase, ref, onValue , set, push, remove } from "firebase/database";
 import { useSelector, useDispatch } from 'react-redux'
 import { Circles } from 'react-loader-spinner';
 import { ToastContainer, toast } from 'react-toastify';
+import { FaSquareMinus } from "react-icons/fa6";
 
 
 const UserList = () => {
+
+  let [frequest, setFrequest] = useState([])
 
   const [usersList, setUsersList] = useState([])
 
   const data = useSelector((state) =>state.loginuserdata.value)
 
-
+  
   const db = getDatabase();
 
   useEffect(()=>{
@@ -30,6 +33,8 @@ const UserList = () => {
     setUsersList(arr);
   });
   },[])
+
+  
 
 
   let handleFrequest = (frequestinfo)=>{
@@ -47,7 +52,34 @@ const UserList = () => {
       toast("Friend Request Send Successfull ...")
     })
   }
+ 
   
+  
+
+
+  useEffect(()=>{
+    const fRequestRef = ref(db, 'friendrequest');
+    onValue(fRequestRef, (snapshot) => {
+      let arr = []
+      snapshot.forEach((item)=>{
+        if(data.uid == item.val().senderuid){
+          arr.push(item.val().senderuid + item.val().receiverid)
+        }
+    })
+    setFrequest(arr);
+  });
+  },[])
+
+  
+
+ let handleCancle = (cancle) => {
+  // if (cancle.id == frequestinfo.receiverid) {
+  //   remove(ref(db, 'friendrequest/' + receiverid)).then(()=>{
+  //     toast("Request Cancle...")
+  //   })
+  // }
+  console.log(cancle);
+ }
 
 
   return (
@@ -67,9 +99,18 @@ const UserList = () => {
                 <h5>{item.username}</h5>
               <p>MERN Developer</p>
             </div>
+            {
+              frequest.includes(item.id + data.uid) || frequest.includes(data.uid + item.id)
+              ?
+              <div onClick={()=>handleCancle(item)} className='user_fd'>
+              <FaSquareMinus />
+              </div>
+              :
             <div onClick={()=>handleFrequest(item)} className='user_fd'>
             <FaPlusSquare />
             </div>
+
+            }
           </div>
         </div>
         ))

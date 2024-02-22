@@ -21,7 +21,7 @@ const FriendsList = () => {
     onValue(friendRef, (snapshot) => {
       let arr = []
       snapshot.forEach((item)=>{
-        if(data.uid == item.val().whoreceiveid || data.uid !== item.val().whosendid){
+        if(data.uid == item.val().whoreceiveid || data.uid == item.val().whosendid){
           arr.push({...item.val(), id:item.key})
         }
     })
@@ -29,7 +29,7 @@ const FriendsList = () => {
   });
   },[])
 
-
+  console.log(friendList);
 
 
   return (
@@ -44,11 +44,17 @@ const FriendsList = () => {
          friendList.map((item, index)=>(
             <div key={index} className='user_item'>
             <div className="user_img">
-              <Image src={item.whosendphoto} alt='Not Found'/>
+              <Image src={data.uid == item.whosendid ? item.whoreceivephoto :item.whosendphoto} alt='Not Found'/>
             </div>
             <div className='user_info'>
               <div className='user_detils'>
+                {
+                  data.uid == item.whosendid
+                  ?
+                  <h5>{item.whoreceivename}</h5>
+                  :
                   <h5>{item.whosendname}</h5>
+                }
                 <p>MERN Developer</p>
               </div>
               <div className='user_Accept'>
