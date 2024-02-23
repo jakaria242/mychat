@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react'
 import GroupCard from '../../components/home/GroupCard'
 import Image from '../../utilities/Image'
 import Ellipse from '../../assets/images/Ellipse 2.png'
-import { getDatabase, ref, onValue , set, push } from "firebase/database";
-import { useSelector, useDispatch } from 'react-redux'
+import { getDatabase, ref, onValue , set, push, remove } from "firebase/database";
+import { useSelector, useDispatch } from 'react-redux';
 import { Circles } from 'react-loader-spinner';
 import { ToastContainer, toast } from 'react-toastify';
 
 
 const FriendsList = () => {
-  const [friendList, setfriendList] = useState([])
 
+  const [friendList, setfriendList] = useState([])
 
   const data = useSelector((state) =>state.loginuserdata.value)
 
@@ -29,7 +29,24 @@ const FriendsList = () => {
   });
   },[])
 
-  console.log(friendList);
+  
+
+  //block oparetion 
+
+  let handleBlock = (blockinfo) => {
+   set(push(ref(db, "block")), {
+    whoblockid : data.uid,
+    whoblockname : data.displayName,
+    whoblockemail : data.email,
+    whoblockimg : data.photoURL,
+    blockid : blockinfo.whoreceiveid,
+    blockemail : blockinfo.whoreceiveemail,
+    blockname : blockinfo.whoreceivename,
+    blockimg : blockinfo.whoreceivephoto,
+   }).then(()=>{
+    remove(ref(db, "friends/" + blockinfo.id))
+   })
+  }
 
 
   return (
@@ -58,7 +75,7 @@ const FriendsList = () => {
                 <p>MERN Developer</p>
               </div>
               <div className='user_Accept'>
-                  <button>Block</button>
+                  <button onClick={()=>handleBlock(item)}>Block</button>
               </div>
             </div>
           </div>

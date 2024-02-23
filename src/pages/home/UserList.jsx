@@ -8,6 +8,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Circles } from 'react-loader-spinner';
 import { ToastContainer, toast } from 'react-toastify';
 import { FaSquareMinus } from "react-icons/fa6";
+import { BsOpencollective } from "react-icons/bs";
+import { FaUserFriends } from "react-icons/fa";
 
 
 const UserList = () => {
@@ -15,6 +17,8 @@ const UserList = () => {
   let [frequest, setFrequest] = useState([])
 
   const [usersList, setUsersList] = useState([])
+
+  const [friendList, setfriendList] = useState([])
 
   const data = useSelector((state) =>state.loginuserdata.value)
 
@@ -39,7 +43,7 @@ const UserList = () => {
 
   let handleFrequest = (frequestinfo)=>{
     // console.log(frequestinfo);
-    set(push(ref(db, 'friendrequest')), {
+    set(ref(db, 'friendrequest/' + frequestinfo.id), {
       senderuid : data.uid,
       sendername : data.displayName,
       senderimg : data.photoURL,
@@ -49,7 +53,7 @@ const UserList = () => {
       receiverimg : frequestinfo.profile_picture,
       receiveriemail : frequestinfo.email
     }).then(()=>{
-      toast("Friend Request Send Successfull ...")
+      // toast("Friend Request Send Successfull ...")
     })
   }
  
@@ -70,15 +74,28 @@ const UserList = () => {
   });
   },[])
 
-  
 
- let handleCancle = (cancle) => {
-  // if (cancle.id == frequestinfo.receiverid) {
-  //   remove(ref(db, 'friendrequest/' + receiverid)).then(()=>{
-  //     toast("Request Cancle...")
-  //   })
-  // }
-  console.log(cancle);
+    //friend data
+    useEffect(()=>{
+      const friendsRef = ref(db, 'friends');
+      onValue(friendsRef, (snapshot) => {
+        let arr = []
+        snapshot.forEach((item)=>{
+          if(item.val().whoreceiveid == data.uid || item.val().whosendid == data.uid){
+            arr.push(item.val().whoreceiveid + item.val().whosendid)
+          }
+        })
+        setfriendList(arr)
+      });
+    },[])
+ 
+
+
+ let handleCancle = (i) => {
+    // console.log(i.id);
+    remove(ref(db, "friendrequest/" + i.id)).then(()=>{
+      // toast("Request Cancel..")
+    })
  }
 
 
@@ -100,16 +117,18 @@ const UserList = () => {
               <p>MERN Developer</p>
             </div>
             {
-              frequest.includes(item.id + data.uid) || frequest.includes(data.uid + item.id)
+              frequest.length > 0 && frequest.includes(item.id + data.uid) || frequest.includes(data.uid + item.id)
               ?
-              <div onClick={()=>handleCancle(item)} className='user_fd'>
-              <FaSquareMinus />
-              </div>
+             <>
+              <div  className='user_fd'> <BsOpencollective /> </div>
+              <div onClick={()=>handleCancle(item)} className='user_fd'> <FaSquareMinus /> </div>
+             </>
               :
-            <div onClick={()=>handleFrequest(item)} className='user_fd'>
-            <FaPlusSquare />
-            </div>
-
+              friendList.includes(item.id + data.uid) || friendList.includes(data.uid + item.id)
+              ?
+              <div  className='user_fd'> <FaUserFriends /> </div>
+              :
+             <div onClick={()=>handleFrequest(item)} className='user_fd'> <FaPlusSquare /> </div> 
             }
           </div>
         </div>
