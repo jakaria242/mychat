@@ -30,10 +30,11 @@ const FriendRequest = () => {
   });
   },[])
 
+  
+
 // fb request cencle===============
 let handleCancleFrequest= (cancleinfo)=> {
   // console.log(cancleinfo);
-  
   remove(ref(db, 'friendrequest/' + cancleinfo.id)).then(()=>{
     toast("Request Cancle...")
   })

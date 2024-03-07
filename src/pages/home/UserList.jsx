@@ -19,6 +19,8 @@ const UserList = () => {
   const [usersList, setUsersList] = useState([])
 
   const [friendList, setfriendList] = useState([])
+  
+  const [requestCheck, setRequestCheck] = useState([])
 
   const data = useSelector((state) =>state.loginuserdata.value)
 
@@ -65,12 +67,17 @@ const UserList = () => {
     const fRequestRef = ref(db, 'friendrequest');
     onValue(fRequestRef, (snapshot) => {
       let arr = []
+      let rcchek = []
       snapshot.forEach((item)=>{
+        if (item.val().receiverid == data.uid) {
+          rcchek.push(item.val().senderuid +  item.val().receiverid)
+        }
         if(data.uid == item.val().senderuid){
           arr.push(item.val().senderuid + item.val().receiverid)
         }
     })
     setFrequest(arr);
+    setRequestCheck(rcchek)
   });
   },[])
 
@@ -97,6 +104,10 @@ const UserList = () => {
       // toast("Request Cancel..")
     })
  }
+
+
+   
+
 
 
   return (
@@ -128,7 +139,13 @@ const UserList = () => {
               ?
               <div  className='user_fd'> <FaUserFriends /> </div>
               :
-             <div onClick={()=>handleFrequest(item)} className='user_fd'> <FaPlusSquare /> </div> 
+              requestCheck.includes(item.id + data.uid)
+              ?
+              <div className='user_Accept'>
+              <button onClick={()=>handleAcceptFrequest(item)}>Confrom</button>
+            </div>
+            :
+            <div onClick={()=>handleFrequest(item)} className='user_fd'> <FaPlusSquare /> </div> 
             }
           </div>
         </div>

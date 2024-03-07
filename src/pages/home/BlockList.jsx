@@ -28,7 +28,25 @@ const BlockList = () => {
   });
   },[])
 
-  console.log();
+
+
+  
+  //unblock oparetion 
+
+   let handleUserUnblock = (unblockInfo) => {
+    remove(ref(db, "block/" + unblockInfo.id)).then(() => {
+      toast.success("Unblock User Successfull", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    });
+   }
 
 
   return (
@@ -47,7 +65,7 @@ const BlockList = () => {
                 <p>MERN Developer</p>
               </div>
               <div className='user_Accept'>
-                  <button>Unblock</button>
+                  <button onClick={() => handleUserUnblock(item)}>Unblock</button>
               </div>
             </div>
           </div>

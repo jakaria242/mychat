@@ -1,8 +1,12 @@
 import React from 'react'
+import "./massage.css"
 
 const Message = () => {
   return (
-    <div>Message</div>
+    <div className='msg_wrapper'>
+      <div></div>
+      <div></div>
+    </div>
   )
 }
 
