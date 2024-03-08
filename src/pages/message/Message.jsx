@@ -3,14 +3,22 @@ import { getDatabase, ref, onValue , set, push, remove } from "firebase/database
 import { useSelector, useDispatch } from 'react-redux';
 import "./massage.css"
 import Image from '../../utilities/Image';
+import { activeuser } from '../../slices/activeUserSlice';
+import { IoMdSend } from "react-icons/io";
+
 
 const Message = () => {
 
+  const [msgText, setMsgText] = useState(" ")
   const [friendList, setfriendList] = useState([])
-
   const data = useSelector((state) =>state.loginuserdata.value)
+  const activechat = useSelector((state) =>state?.activeuserdata?.value)
+
+
 
   const db = getDatabase();
+
+  const dispatch = useDispatch();
 
 
   useEffect(()=>{
@@ -29,8 +37,27 @@ const Message = () => {
 
 
   let handleUser = (i)=> {
-    console.log(i);
+    dispatch(activeuser(i))
   }
+
+
+    let handleSubmit = () => {
+      // console.log(msgText);
+      set(push(ref(db, 'message')),{
+        senderid : data.uid,
+        senderemail : data.email,
+        sendername : data.displayName,
+        message : msgText,
+        receiverid: data.uid == activechat.whoreceiveid ? activechat.whosendid : activechat.whoreceiveid,
+        receivername : data.uid == activechat.whoreceiveid ? activechat.whosendname : activechat.whoreceivename,
+        receiveremail : data.uid == activechat.whoreceiveid ? activechat.whosendemail : activechat.whoreceiveemail,
+
+      }).then(()=>{
+        console.log("hoise");
+      })
+    }
+
+    // message read oparetion
 
 
   return (
@@ -67,10 +94,21 @@ const Message = () => {
 }
         </div>
       </div>
-      <div className='msg_box'>
+      {
+        activechat != null 
+        ?
+        <div className='msg_box'>
         <div className='msg_box_heading'>
-        <h3 >Jakaria</h3>
-        <h6 >Active Now</h6>
+        <h3 >
+          {activechat !== null && 
+          activechat.whosendid == data.uid
+          ?
+          activechat.whoreceivename
+          :
+          activechat.whosendname
+          }
+        </h3>
+        <h6 className='peraactive'>Active Now</h6>
         </div>
         <div className='msg_main'>
           <div className='sendmsg'>
@@ -95,9 +133,17 @@ const Message = () => {
           </div>
         </div>
         <div className='msg_footer'>
-        <input type="text"  placeholder='enter your message'/>
+        <input onChange={(e)=>setMsgText(e.target.value)} type="text"  placeholder='Enter your message' className='msg_input'/>
+        <div onClick={handleSubmit} className='msg_send'>
+        <IoMdSend />
+        </div>
           </div>
       </div>
+        :
+        <div>
+          <h1>Plese select a user</h1>
+        </div>
+      }
     </div>
   )
 }
