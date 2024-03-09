@@ -9,6 +9,7 @@ import { IoMdSend } from "react-icons/io";
 
 const Message = () => {
 
+  const [allMessage, setAllMessage] = useState([])
   const [msgText, setMsgText] = useState(" ")
   const [friendList, setfriendList] = useState([])
   const data = useSelector((state) =>state.loginuserdata.value)
@@ -58,6 +59,22 @@ const Message = () => {
     }
 
     // message read oparetion
+
+
+    useEffect(()=>{
+      const messageRef = ref(db, 'message');
+      onValue(messageRef, (snapshot) => {
+        let arr = []
+        snapshot.forEach((item)=>{
+          if(data.uid == item.val().receiverid || data.uid == item.val().senderid
+          ){
+            arr.push({...item.val(), id:item.key})
+          }
+      })
+      setAllMessage(arr);
+    });
+    },[activechat])
+  
 
 
   return (
@@ -111,12 +128,16 @@ const Message = () => {
         <h6 className='peraactive'>Active Now</h6>
         </div>
         <div className='msg_main'>
-          <div className='sendmsg'>
+          {
+            allMessage.map((item,index)=>(
+          <div key={index} className='sendmsg'>
             <p>
-              hellow
+              {item.message}
             </p>
           </div>
-          <div className='receivemsg'>
+            ))
+          }
+          {/* <div className='receivemsg'>
             <p>
               hi
             </p>
@@ -130,7 +151,7 @@ const Message = () => {
             <p>
               valo asi
             </p>
-          </div>
+          </div> */}
         </div>
         <div className='msg_footer'>
         <input onChange={(e)=>setMsgText(e.target.value)} type="text"  placeholder='Enter your message' className='msg_input'/>
