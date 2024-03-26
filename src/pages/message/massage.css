@@ -56,9 +56,15 @@
    text-transform: capitalize;
 }
 .msg_main{
-    margin: 20px;
-    
+    margin: 20px;  
+    overflow-y: scroll;
 }
+.scroll_box{
+    overflow-y: scroll;
+}
+.scroll_box::-webkit-scrollbar {
+    width: 0px;
+  }
 .peraactive{
     padding-top: 10px;
 }
@@ -92,6 +98,7 @@
     display: flex;
     align-items: center;
     gap: 20px;
+    position: relative;
 }
 .msg_input{
     width: 60%;
@@ -107,4 +114,14 @@
     font-size: 45px;
     color: aliceblue;
     cursor: pointer;
+}
+.msg_footer .emoji{
+    color: #fff;
+    font-size: 35px;
+    cursor: pointer;
+}
+.emojiwrapper{
+   position: absolute; 
+   left: 20px;
+   bottom: 90px;
 }
