@@ -142,7 +142,7 @@ const UserList = () => {
               requestCheck.includes(item.id + data.uid)
               ?
               <div className='user_Accept'>
-              <button onClick={()=>handleAcceptFrequest(item)}>Confrom</button>
+              <button >Confrom</button>
             </div>
             :
             <div onClick={()=>handleFrequest(item)} className='user_fd'> <FaPlusSquare /> </div> 
