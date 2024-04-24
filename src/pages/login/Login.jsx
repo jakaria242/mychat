@@ -15,7 +15,7 @@ import { FaRegEye, FaRegEyeSlash,} from "react-icons/fa6";
 import { IoCloseSharp } from "react-icons/io5";
 import Modal from '@mui/material/Modal';
 import { Alert } from '@mui/material';
-import { getAuth, signInWithEmailAndPassword,signOut } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -41,6 +41,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const auth = getAuth();
+  const provider = new GoogleAuthProvider ();
 
   const [hideShoew, setHideShoew] = useState(false);
   
@@ -50,6 +51,30 @@ const Login = () => {
 
   let handleModalClose = () => {
     setOpen(false)
+  }
+
+
+
+  let handleGoogleAuth = () => {
+    signInWithPopup(auth, provider)
+  .then((result) => {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    // The signed-in user info.
+    const user = result.user;
+    // IdP data available using getAdditionalUserInfo(result)
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    // ...
+  });
   }
   
 //  forgot validation
@@ -74,11 +99,18 @@ const Login = () => {
     }else if(!forgetData.forgetemail.match(emailregex)){
       setForgetError({forgetemail: "Invalid email address"});
     }else{
-      setForgetError({
-        forgetemail: "",
-      })
+      setForgetError({ forgetemail: "",})
+      sendPasswordResetEmail(auth, forgetData.forgetemail)
+          .then(() => {
+            console.log("password change done");
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // ..
+          });
     }
-    console.log(forgetData);
+    
   }
  //  forgot validation
 
@@ -175,7 +207,7 @@ theme="dark"
             <div className="loginbox">
               <div>
               <SectionHeading style='auth_heading' text="Login to your account!"/>
-              <div className="provider_login">
+              <div onClick={handleGoogleAuth} className="provider_login">
                 <Image src={googleicon} alt="NotFound"/>
               <Link to="#">Login with Google</Link>
               </div>
