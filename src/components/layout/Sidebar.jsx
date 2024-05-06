@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../layout/layout.css'
 import { GrLogout } from "react-icons/gr";
 import { NavLink } from 'react-router-dom';
@@ -36,7 +36,7 @@ const style = {
 const Sidebar = () => {
 
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -99,6 +99,11 @@ const Sidebar = () => {
    // Logout --==================================================
 
 
+
+   
+         
+
+
   const userinfo = auth.currentUser;
 
   return (
@@ -135,6 +140,7 @@ const Sidebar = () => {
       <div>
         <div className='sidebar_imgbox'>
           <Image src={data && data.photoURL} alt="Not Found"/>
+
           <div className="image_overlay" onClick={handleOpen}><MdCloudUpload /></div>
         </div>
         <h3 className='username'>{data && data.displayName}</h3>
@@ -165,3 +171,11 @@ const Sidebar = () => {
 }
 
 export default Sidebar
+
+
+
+
+
+
+
+
