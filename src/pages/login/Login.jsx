@@ -5,7 +5,6 @@ import Grid from '@mui/material/Grid';
 import "./login.css"
 import SectionHeading from '../../components/SectionHeading';
 import googleicon from '../../../public/images/google-icon.png'
-import Loginimg from '../../assets/images/loginImg.jpg'
 import { Link } from 'react-router-dom';
 import Image from '../../utilities/Image';
 import Input from '../../components/Input';
@@ -21,6 +20,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useSelector, useDispatch } from 'react-redux'
 import { loginuser } from '../../slices/userSlice';
+
+
+
 
 const style = {
   position: 'absolute',
@@ -93,6 +95,7 @@ const Login = () => {
     })
   }
 
+
   let handleSend = () => {
     if (!forgetData.forgetemail){
       setForgetError({forgetemail : "Enter your email"});
@@ -145,7 +148,7 @@ const Login = () => {
     }else if(!signInData.password){
       setLoginError({password: "Enter your password"});
     }else if(!signInData.password.match(passwordregex)){
-      setLoginError({email: "Invalid email or password address"});
+      setLoginError({email: "Invalid email address or password"});
     }else{
       setLoginError({
         email : "",
@@ -156,7 +159,7 @@ const Login = () => {
         if (userCredential.user.emailVerified) {
           localStorage.setItem("user", JSON.stringify(userCredential.user))
           dispatch(loginuser(userCredential.user))
-          navigate("\home")
+          navigate("/home")
         }else{
           signOut(auth).then(()=>{
             toast.error('Pleace verify your email', {
@@ -203,7 +206,7 @@ theme="dark"
 />
   <Box>
       <Grid container spacing={0}>
-        <Grid item xs={6}>
+        <Grid item xs={12}>
             <div className="loginbox">
               <div>
               <SectionHeading style='auth_heading' text="Login to your account!"/>
@@ -239,11 +242,6 @@ theme="dark"
               </div>
             </div>
           </Grid>
-          <Grid item xs={6}>
-          <div className="loginimg">
-          <Image src={Loginimg} alt="Not Found"/>
-          </div>
-        </Grid>
       </Grid>
   </Box>
   <Modal
@@ -262,7 +260,7 @@ theme="dark"
                   {
                     forgetError.forgetemail && <Alert className='regierroe' severity="error">{forgetError.forgetemail}</Alert> 
                   }
-              <CustomButton onClick={handleSend} variant="contained" text='Send link'/>
+              <CustomButton onClick={handleSend} variant="contained" styling='loginbtn' text='Send link'/>
 
             </div>
         </Box>

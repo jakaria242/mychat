@@ -5,9 +5,7 @@ import SectionHeading from '../../components/SectionHeading';
 import Input from '../../components/Input';
 import CustomButton from '../../components/CustomButton';
 import AuthNavigate from '../../components/AuthNavigate';
-import Image from '../../utilities/Image';
 import '../registration/registration.css'
-import regitrationImg from '../../assets/images/registrationImg.jpg'
 import { FaRegEye, FaRegEyeSlash  } from "react-icons/fa6";
 import { Alert } from '@mui/material';
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, updateProfile  } from "firebase/auth";
@@ -119,7 +117,7 @@ const Registration = () => {
 
     <Box>
     <Grid container spacing={0}>
-      <Grid item xs={6}>
+      <Grid item xs={12}>
           <div className="loginbox">
             <div>
             <SectionHeading style='auth_heading' text="Get started with easily register"/>
@@ -167,11 +165,7 @@ const Registration = () => {
             </div>
           </div>
         </Grid>
-        <Grid item xs={6}>
-        <div className="loginimg">
-        <Image src={regitrationImg} alt="Not Found"/>
-        </div>
-      </Grid>
+
     </Grid>
 </Box>
     </>

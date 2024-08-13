@@ -1,4 +1,6 @@
+
 .regigtapera{
+    text-align: center;
     padding: 20px 0 38px 0;
     color: #000;
     font-size: 20px;
@@ -13,17 +15,19 @@
     width: 368px;
     padding: 15px 0 !important;
     border-radius: 86px !important;
-    margin-top: 25px !important;
+    margin-top: 5px !important;
     color: #FFF !important;
     font-family: 'Nunito', sans-serif !important;
-    font-size: 20px !important;
-    font-weight: 600 !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
 
 }
 .from_mainn{
     display: flex;
     flex-direction: column;
-    row-gap: 35px;
+    justify-content: center;
+    align-items: center;
+    row-gap: 25px;
     
 }
 .regis_pass_shoeicon{
@@ -32,10 +36,13 @@
 .hide_show_registration svg{
     position: absolute;
     font-size: 18px;
-    right: 170px;
+    right: 20px;
     top: 20px;
 }
 .from_mainn .regierroe{
 width: 370px;
 margin-top: 5px;
+}
+.loginauth{
+    text-align: center;
 }

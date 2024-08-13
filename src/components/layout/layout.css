@@ -6,8 +6,10 @@
     background: #5F35F5;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
-    height: 110vh;
-    padding: 20px 0;
+    height: 100vh;
+    position: fixed;
+    padding-left: 50px;
+    padding-right: 50px;
 }
 .sidebar_imgbox{
     margin-left: 48px;
